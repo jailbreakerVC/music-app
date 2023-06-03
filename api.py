@@ -14,9 +14,9 @@ import os
 load_dotenv(".env")
 
 # credentials
-# yt_token = os.getenv("YOUTUBE_TOKEN")
+yt_token = os.getenv("YOUTUBE_KEY")
 token = os.getenv("BARD_TOKEN")
-# youtube = build('youtube', 'v3', developerKey=yt_token)
+youtube = build('youtube', 'v3', developerKey=yt_token)
 bard = Bard(token=token)
 # setting the scene
 scene = ""
@@ -44,10 +44,36 @@ def generate_tags(output):
 
         # print("CONTENT: " + extracted_content)
         # logging.log("Content")
+        extracted_content = extracted_content[2:-2].split('", "')
         return extracted_content
     else:
-        return 0
+        return (
 
+        )
+
+
+
+def get_youtube_results(tags,q):
+    listt=[]
+    try:
+        search_response = youtube.search().list(
+            q=q,
+            type='video',
+            part='id,snippet',
+            maxResults=2
+        ).execute()
+        for search_result in search_response.get('items', []):
+            if search_result['id']['kind'] == 'youtube#video':
+                listt.append({
+                "video_id":search_result['id']['videoId'],
+                "video_title":search_result['snippet']['title'],
+                "video_link":'https://www.youtube.com/watch?v=' + search_result['id']['videoId']
+        })
+        return listt
+    except HttpError as e:
+        return {
+                'output': "null",
+            }
 
 @app.route('/', methods=["GET"])
 def home():
@@ -59,10 +85,19 @@ def home():
 def generate():
     scene = request.args['scene']
     output = bard.get_answer(query_template)
-    if output!=[]:
-        return (
-            {'result': generate_tags(output=output)}
-        )
+    if output:
+        tags = generate_tags(output=output)
+        print(tags)
+        q = 'copyright free music' + ''.join(tags)
+        print(q)
+        if tags:
+            return jsonify (
+            get_youtube_results(tags=tags,q=q)
+            )
+        else:
+            return {
+                'output': "null",
+            }
     return {
         'output': "null",
     }
