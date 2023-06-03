@@ -21,7 +21,6 @@ try:
     # Extract the video IDs and titles from the search results
     video_ids = []
     video_titles = []
-
     for search_result in search_response.get('items', []):
         if search_result['id']['kind'] == 'youtube#video':
             video_ids.append(search_result['id']['videoId'])
@@ -29,7 +28,7 @@ try:
 
 
     # Get the video links
-    
+    video_links = ['https://www.youtube.com/watch?v=' + video_id for video_id in video_ids]
 
     # Print the video IDs, titles, and links
     print(len(video_ids),'Video IDs:', video_ids, "\n")
