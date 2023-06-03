@@ -1,2 +1,2 @@
-# music-app
+# music-app python api
 ntcc project 
