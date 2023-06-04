@@ -10,7 +10,6 @@ import re
 import logging
 import os
 
-
 load_dotenv(".env")
 
 # credentials
@@ -37,8 +36,7 @@ def generate_tags(output):
         extracted_content = extracted_content.replace(
             "\\n", "")
 
-        # print("CONTENT: " + extracted_content)
-        # logging.log("Content")
+
         extracted_content = extracted_content[2:-2].split('", "')
         return extracted_content
     else:
@@ -46,11 +44,8 @@ def generate_tags(output):
 
         )
 
-
-
 def get_youtube_results(tags):
-
-    
+ 
     listt=[]
     tag = tags[0].split()
     
@@ -91,8 +86,6 @@ def generate():
     if output:
         tags = generate_tags(output=output)
         print(tags)
-        # q = 'copyright free music' + '' + tags[0]
-        # print(q)
         if tags:
             return jsonify (
             get_youtube_results(tags=tags)
