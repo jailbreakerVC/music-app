@@ -25,7 +25,6 @@ query_template = f"Write me some genre to search for music that would fit right 
 # starting flask
 app = Flask(__name__)
 
-
 def generate_tags(output):
     """
     Extracts the content from the output of the bard api
@@ -49,28 +48,35 @@ def generate_tags(output):
 
 
 
-def get_youtube_results(q):
+def get_youtube_results(tags):
 
+    
     listt=[]
-    try:
-        search_response = youtube.search().list(
-            q=q,
-            type='video',
-            part='id,snippet',
-            maxResults=10
-        ).execute()
-        for search_result in search_response.get('items', []):
-            if search_result['id']['kind'] == 'youtube#video':
-                listt.append({
-                "video_id":search_result['id']['videoId'],
-                "video_title":search_result['snippet']['title'],
-                "video_link":'https://www.youtube.com/watch?v=' + search_result['id']['videoId']
-        })
-        return listt
-    except HttpError as e:
-        return {
-                'output': "null",
-            }
+    tag = tags[0].split()
+    
+    for t in tag:
+        print(t)
+        q = str(tag) + "copyright free music" 
+        print("searching for: "+ t)
+        try:
+            search_response = youtube.search().list(
+                q=q,
+                type='video',
+                part='id,snippet',
+                maxResults=2
+            ).execute()
+            for search_result in search_response.get('items', []):
+                if search_result['id']['kind'] == 'youtube#video':
+                    listt.append({
+                    "video_id":search_result['id']['videoId'],
+                    "video_title":search_result['snippet']['title'],
+                    "video_link":'https://www.youtube.com/watch?v=' + search_result['id']['videoId']
+                })
+        except HttpError as e:
+            return {
+                    'output': "null",
+                }
+    return listt
 
 @app.route('/', methods=["GET"])
 def home():
@@ -85,11 +91,11 @@ def generate():
     if output:
         tags = generate_tags(output=output)
         print(tags)
-        q = 'copyright free music' + '' + tags[0]
-        print(q)
+        # q = 'copyright free music' + '' + tags[0]
+        # print(q)
         if tags:
             return jsonify (
-            get_youtube_results(q=q)
+            get_youtube_results(tags=tags)
             )
         else:
             return {
