@@ -21,13 +21,9 @@ bard = Bard(token=token)
 # setting the scene
 scene = ""
 query_template = f"Write me some genre to search for music that would fit right with this scene: {scene} . Generate me 5 of these tags which would fit the scene and give the output in an array"
-# tags=[]
-# yt_query = 'copyright free music' + ''.join(tags)
+
 # starting flask
 app = Flask(__name__)
-
-
-
 
 
 def generate_tags(output):
@@ -53,14 +49,15 @@ def generate_tags(output):
 
 
 
-def get_youtube_results(tags,q):
+def get_youtube_results(q):
+
     listt=[]
     try:
         search_response = youtube.search().list(
             q=q,
             type='video',
             part='id,snippet',
-            maxResults=2
+            maxResults=10
         ).execute()
         for search_result in search_response.get('items', []):
             if search_result['id']['kind'] == 'youtube#video':
@@ -88,11 +85,11 @@ def generate():
     if output:
         tags = generate_tags(output=output)
         print(tags)
-        q = 'copyright free music' + ''.join(tags)
+        q = 'copyright free music' + '' + tags[0]
         print(q)
         if tags:
             return jsonify (
-            get_youtube_results(tags=tags,q=q)
+            get_youtube_results(q=q)
             )
         else:
             return {
