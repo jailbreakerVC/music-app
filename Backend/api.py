@@ -4,6 +4,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS
 from bardapi import Bard
 from dotenv import load_dotenv
 import re
@@ -25,6 +26,7 @@ query_template = f"Write me some genre to search for music that would fit right 
 
 # starting flask
 app = Flask(__name__)
+CORS(app)
 
 
 def generate_tags(output):
