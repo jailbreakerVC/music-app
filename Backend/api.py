@@ -56,7 +56,7 @@ def get_youtube_results(tags):
 
     for t in tag:
         print("t", t)
-        q = str(t) + "copyright free music"
+        q = str(t) + "music"
         print("searching for: ", q)
         try:
             search_response = youtube.search().list(
@@ -67,7 +67,7 @@ def get_youtube_results(tags):
             ).execute()
             for search_result in search_response.get('items', []):
                 if search_result['id']['kind'] == 'youtube#video':
-                    print(search_result['snippet']['title'])
+                    # print(search_result['snippet']['title'])
                     listt.append({
 
                         "video_id": search_result['id']['videoId'],
@@ -99,7 +99,8 @@ def generate():
         if tags:
             print("tags: ", tags)
             return jsonify(
-                get_youtube_results(tags=tags)
+
+                print(get_youtube_results(tags=tags))
             )
         else:
             return {
@@ -108,6 +109,62 @@ def generate():
     return {
         'output': "null",
     }
+
+
+@app.route('/test', methods=["GET"])
+def test():
+    return [
+        {
+            "video_id": "aRmUkGqWuCY",
+            "video_link": "https://www.youtube.com/watch?v=aRmUkGqWuCY",
+            "video_title": "🤔 Thoughtful &amp; Ambient (Royalty Free Music) - &quot;ESCAPE&quot; by Onycs 🇫🇷"
+        },
+        {
+            "video_id": "H4BAEf5V-Yc",
+            "video_link": "https://www.youtube.com/watch?v=H4BAEf5V-Yc",
+            "video_title": "💤 Relaxing Ambient Instrumental Music (For Videos) - &quot;Ethereal&quot; by Punch Deck"
+        },
+        {
+            "video_id": "CLeZyIID9Bo",
+            "video_link": "https://www.youtube.com/watch?v=CLeZyIID9Bo",
+            "video_title": "Chill Lofi Mix [chill lo-fi hip hop beats]"
+        },
+        {
+            "video_id": "i-_1Os7hVDw",
+            "video_link": "https://www.youtube.com/watch?v=i-_1Os7hVDw",
+            "video_title": "Lofi Chilled Beats - 12 Hours of DMCA Free and Copyright Free Music for Twitch Streamers (2021)"
+        },
+        {
+            "video_id": "iAguE62acA8",
+            "video_link": "https://www.youtube.com/watch?v=iAguE62acA8",
+            "video_title": "Dark Techno / EBM / Industrial Bass Mix &#39;TITAN&#39; [Copyright Free]"
+        },
+        {
+            "video_id": "0mAzlQwIPQI",
+            "video_link": "https://www.youtube.com/watch?v=0mAzlQwIPQI",
+            "video_title": "2 HOURS Dark Techno / Cyberpunk / Industrial Bass Mix &#39;UNSCARED&#39; [Copyright Free]"
+        },
+        {
+            "video_id": "LlqSYztIc08",
+            "video_link": "https://www.youtube.com/watch?v=LlqSYztIc08",
+            "video_title": "[FREE] Indie x Bedroom Pop x Dream Pop Type Beat - &quot;sentimental&quot;"
+        },
+        {
+            "video_id": "8Mgkvofs3PE",
+            "video_link": "https://www.youtube.com/watch?v=8Mgkvofs3PE",
+            "video_title": "🌼 Indie &amp; Alternative (Royalty Free Music) - &quot;VOICE MEMOS&quot; by Zack Medlin 🇺🇸"
+        },
+        {
+            "video_id": "pLcw3dK1yU0",
+            "video_link": "https://www.youtube.com/watch?v=pLcw3dK1yU0",
+            "video_title": "Lofi Hiphop Mix 2022 | Lofi beats to study | No Copyright Lofi Hip Hop 2022"
+        },
+        {
+            "video_id": "BEXL80LS0-I",
+            "video_link": "https://www.youtube.com/watch?v=BEXL80LS0-I",
+            "video_title": "BlockBuster 🎥 No Copyright Lofi Hip Hop &amp; Chillhop Mix 2022 | Chill lofi beats to study / relax to"
+        }
+    ]
 
 
 if __name__ == '__main__':
