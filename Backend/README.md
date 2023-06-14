@@ -49,7 +49,7 @@ To run this project, you will need to add the following environment variables to
 | from YouTube data API.
 
 `BARD_TOKEN` |
-Session: Application → Cookies → Copy the value of \_\_Secure-1PSID cookie.
+Session: Google bard website → Application → Cookies → Copy the value of \_\_Secure-1PSID cookie.
 
 ## Run Locally
 
