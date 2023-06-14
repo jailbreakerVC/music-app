@@ -12,6 +12,7 @@ export function Results({ data }) {
           key={item.video_id}
         >
           <img
+            className="rounded-lg"
             src={`https://img.youtube.com/vi/${item.video_id}/hqdefault.jpg`}
           />
           <span className="mb-3"></span>
