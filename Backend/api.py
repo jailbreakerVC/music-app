@@ -100,7 +100,7 @@ def generate():
             print("tags: ", tags)
             return jsonify(
 
-                print(get_youtube_results(tags=tags))
+                get_youtube_results(tags=tags)
             )
         else:
             return {

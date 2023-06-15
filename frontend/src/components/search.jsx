@@ -18,13 +18,14 @@ export function Search({ showSearch, search, setResults, results }) {
                   // console.log(
                   //   `http://localhost:8000/generate/?scene=${e.target[0].value}`
                   // );
+
                   const scene = e.target[0].value;
                   scene.replace(/\s/g, "+");
                   const res = await axios.get(
                     `http://localhost:8000/generate/?scene=${e.target[0].value}`
                   );
                   // const SearchResults = res.data;
-                  console.log("res.data", res.data);
+                  console.log("res.data", res);
                   setResults(res.data);
                   showSearch(false);
                   // console.log("search resulsts: ", SearchResults);
