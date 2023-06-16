@@ -8,7 +8,7 @@ export function Results({ data }) {
       return (
         // key = {item.video_id}
         <div
-          className="card w-96 bg-base-90 shadow-xl mb-10"
+          className="card w-70 bg-base-90 shadow-xl mb-10"
           key={item.video_id}
         >
           <img

@@ -26,7 +26,7 @@ function App() {
         results={results}
       />
       <h1 className="h1">Here are some music that you can use:</h1>
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-3 gap-5">
         <Results data={results} />
       </div>
     </>
