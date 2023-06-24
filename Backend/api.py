@@ -1,16 +1,6 @@
 """
     backend for project
 """
-# from googleapiclient.discovery import build
-# from googleapiclient.errors import HttpError
-# from flask import Flask, jsonify, request, render_template
-# from flask_cors import CORS
-# from bardapi import Bard
-# from dotenv import load_dotenv
-# import re
-# import logging
-# import os
-# import json
 
 import logging
 import os
