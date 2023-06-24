@@ -1,16 +1,27 @@
 """
     backend for project
 """
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from flask import Flask, jsonify, request, render_template
-from flask_cors import CORS
-from bardapi import Bard
-from dotenv import load_dotenv
-import re
+# from googleapiclient.discovery import build
+# from googleapiclient.errors import HttpError
+# from flask import Flask, jsonify, request, render_template
+# from flask_cors import CORS
+# from bardapi import Bard
+# from dotenv import load_dotenv
+# import re
+# import logging
+# import os
+# import json
+
 import logging
 import os
+import re
 import json
+from dotenv import load_dotenv
+from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from bardapi import Bard
 
 load_dotenv(".env")
 
@@ -19,13 +30,15 @@ yt_token = os.getenv("YOUTUBE_KEY")
 token = os.getenv("BARD_TOKEN")
 youtube = build('youtube', 'v3', developerKey=yt_token)
 bard = Bard(token=token)
+
 # setting the scene
 scene = ""
 query_template = f"Write me some genre to search for music that would fit right with this scene: {scene} . Generate me 5 of these tags which would fit the scene and give the output in an array"
-# query_template = f"Write me a list of 5 genre to search for music that would fit right with this scene: {scene}, generate 5 of these tags in an array, see what type of music movies and tv shows use for this kind of scene and use that information to generate the tags."
+
 
 with open('testData.json') as f:
     data = json.load(f)
+
 # starting flask
 app = Flask(__name__)
 CORS(app)
@@ -39,16 +52,11 @@ def generate_tags(output):
     """
     matches = re.findall(r'```(.+?)```', str(output), re.DOTALL)
     if matches:
-        extracted_content = matches[0].strip()
-        extracted_content = extracted_content.replace(
-            "\\n", "")
-
+        extracted_content = matches[0].strip().replace("\\n", "")
         extracted_content = extracted_content[2:-2].split('", "')
         return extracted_content
     else:
-        return (
-
-        )
+        return []
 
 
 def get_youtube_results(tags):
@@ -58,7 +66,7 @@ def get_youtube_results(tags):
 
     for t in tag:
         print("t", t)
-        q = str(t) + "music"
+        q = f"{t} music"
         print("searching for: ", q)
         try:
             search_response = youtube.search().list(
@@ -78,7 +86,7 @@ def get_youtube_results(tags):
                     })
         except HttpError as e:
             return {
-                e,
+                'error': str(e)
 
             }
     return listt
@@ -92,25 +100,19 @@ def home():
 
 @app.route('/generate/', methods=['GET'])
 def generate():
-    scene = request.args['scene']
+    scene = request.args.get('scene')
     output = bard.get_answer(query_template)
+
     if output:
         print("getting bard output")
         tags = generate_tags(output=output)
-        print(tags)
-        if tags:
-            print("tags: ", tags)
-            return jsonify(
+        # print(tags)
 
-                get_youtube_results(tags=tags)
-            )
-        else:
-            return {
-                'output': "null",
-            }
-    return {
-        'output': "null",
-    }
+        if tags:
+            # print("tags:", tags)
+            return jsonify(get_youtube_results(tags=tags))
+
+    return jsonify({'output': "null"})
 
 
 @app.route('/test', methods=["GET"])

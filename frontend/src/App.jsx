@@ -9,13 +9,6 @@ function App() {
   const [home, setHome] = useState(true);
   const [search, setSearch] = useState(false);
   const [results, setResults] = useState();
-  // useEffect(() => {
-  //   for (result in results) {
-  //     console.log("result: " + result);
-  //   }
-  //   // console.log("results:" + results);
-  // }, [results]);
-
   return (
     <>
       <Home home={home} showHome={setHome} showSearch={setSearch} />
