@@ -40,3 +40,29 @@
 .read-the-docs {
   color: #888;
 }
+
+/*                 LOADER              */
+.loader-container {
+  height: 6.25em;
+  width: 6.25em;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  justify-content: center;
+  top: 50%;
+  left: 47%;
+}
+.loading-text-container {
+  /* top: 58%; */
+  left: 48.5%;
+}
+.loading-text {
+  background-color: transparent;
+  color: #434242;
+}
+#dark .loading-text {
+  background-color: rgb(4, 4, 4);
+  color: #fff;
+}
