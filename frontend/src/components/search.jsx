@@ -10,7 +10,7 @@ export function Search({
 }) {
   if (search != false) {
     return (
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero min-h-screen bg-slate-400 ">
         <div className="form-control w-full max-w-xs">
           <label className="label">
             <span className="label-text">What's the scene like?</span>

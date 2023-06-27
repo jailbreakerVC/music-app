@@ -23,7 +23,6 @@ bard = Bard(token=token)
 
 # setting the scene
 scene = ""
-query_template = f"Write me some genre to search for music that would fit right with this scene: {scene} . Generate me 5 of these tags which would fit the scene and give the output in an array"
 
 
 with open('testData.json') as f:
@@ -56,7 +55,8 @@ def get_youtube_results(tags):
 
     for t in tag:
         print("t", t)
-        q = f"{t} music"
+        term = t.replace("'", "").replace('"', '').replace(",", "")
+        q = f"{term} music for youtube videos"
         print("searching for: ", q)
         try:
             search_response = youtube.search().list(
@@ -67,7 +67,6 @@ def get_youtube_results(tags):
             ).execute()
             for search_result in search_response.get('items', []):
                 if search_result['id']['kind'] == 'youtube#video':
-                    # print(search_result['snippet']['title'])
                     listt.append({
 
                         "video_id": search_result['id']['videoId'],
@@ -91,8 +90,9 @@ def home():
 @app.route('/generate/', methods=['GET'])
 def generate():
     scene = request.args.get('scene')
+    query_template = f"Write me some genre to search for music that would fit right with this scene: '{scene}' . Generate me 5 of these tags which would fit the scene and give the output in an array"
+    print("QTquery_template", query_template)
     output = bard.get_answer(query_template)
-
     if output:
         print("getting bard output")
         tags = generate_tags(output=output)
@@ -101,6 +101,8 @@ def generate():
         if tags:
             # print("tags:", tags)
             return jsonify(get_youtube_results(tags=tags))
+    elif output == None:
+        return jsonify({'output': "null"})
 
     return jsonify({'output': "null"})
 

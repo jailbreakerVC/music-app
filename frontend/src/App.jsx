@@ -1,7 +1,7 @@
-import { Search } from "./components/search";
 import { Home } from "./components/home";
 import { Results } from "./components/results";
 import Loader from "./components/loader";
+import Search from "./components/search2";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { stringify } from "postcss";
@@ -13,8 +13,6 @@ function App() {
   const [Loading, setLoading] = useState(false);
   return (
     <>
-      <Loader Loading={Loading} />
-      <Home home={home} showHome={setHome} showSearch={setSearch} />
       <Search
         showSearch={setSearch}
         search={search}
@@ -22,7 +20,15 @@ function App() {
         results={results}
         setLoading={setLoading}
       />
-      <h1 className="h1">Here are some music that you can use:</h1>
+      <Loader Loading={Loading} />
+      <Home home={home} showHome={setHome} showSearch={setSearch} />
+      {/* <Search
+        showSearch={setSearch}
+        search={search}
+        setResults={setResults}
+        results={results}
+        setLoading={setLoading}
+      /> */}
       <div className="grid grid-cols-3 gap-5">
         <Results data={results} />
       </div>

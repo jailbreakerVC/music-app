@@ -2,7 +2,7 @@ import React from "react";
 export function Home({ home, showHome, showSearch }) {
   if (home == true) {
     return (
-      <div className="hero ">
+      <div className="hero bg-cover">
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">Music recommendation App </h1>
