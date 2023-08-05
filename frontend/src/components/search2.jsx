@@ -20,8 +20,8 @@ export function Search({
               const scene = e.target[0].value;
               scene.replace(/\s/g, "+");
               const res = await axios.get(
-                `http://localhost:8000/generate/?scene=${e.target[0].value}`
-                // `http://localhost:8000/test`
+                // `http://localhost:8000/generate/?scene=${e.target[0].value}`
+                `http://localhost:8000/test`
               );
               console.log("res.data", res);
               setResults(res.data);
