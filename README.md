@@ -6,7 +6,7 @@ LLM Based Music Recommendation App is a application specifically designed to ass
 
 [Backend](https://github.com/jailbreakerVC/music-app/blob/master/Backend/README.md)
 
-[Frontend](https://github.com/jailbreakerVC/music-app/blob/master/frontend/frontend.md)
+[Frontend](https://github.com/jailbreakerVC/music-app/blob/master/frontend/README.md)
 
 ## Directory Structure
 
