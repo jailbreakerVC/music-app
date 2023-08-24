@@ -1,28 +1,25 @@
 """
     backend for project
 """
-
-# import logging
-# import os
-# import re
+import os
+import re
 import json
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-# from googleapiclient.discovery import build
-# from googleapiclient.errors import HttpError
-# from bardapi import Bard
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from bardapi import Bard
 
-# load_dotenv(".env")
+load_dotenv(".env")
 
-# credentials
-# yt_token = os.getenv("YOUTUBE_KEY")
-# token = os.getenv("BARD_TOKEN")
-# youtube = build('youtube', 'v3', developerKey=yt_token)
-# bard = Bard(token=token)
+yt_token = os.getenv("YOUTUBE_KEY")
+token = os.getenv("BARD_TOKEN")
+youtube = build('youtube', 'v3', developerKey=yt_token)
+bard = Bard(token=token)
 
-# setting the scene
-# scene = ""
+
+scene = ""
 
 
 with open('testData.json') as f:
@@ -81,30 +78,29 @@ def get_youtube_results(tags):
     return listt
 
 
-# @app.route('/', methods=["GET"])
-# def home():
-#     logging.info("Loading home page")
-#     return render_template('index.html')
+@app.route('/', methods=["GET"])
+def home():
+    return render_template('index.html')
 
 
-# @app.route('/generate/', methods=['GET'])
-# def generate():
-#     scene = request.args.get('scene')
-#     query_template = f"Write me some genre to search for music that would fit right with this scene: '{scene}' . Generate me 5 of these tags which would fit the scene and give the output in an array"
-#     print("QTquery_template", query_template)
-#     output = bard.get_answer(query_template)
-#     if output:
-#         print("getting bard output")
-#         tags = generate_tags(output=output)
-#         # print(tags)
+@app.route('/generate/', methods=['GET'])
+def generate():
+    scene = request.args.get('scene')
+    query_template = f"Write me some genre to search for music that would fit right with this scene: '{scene}' . Generate me 5 of these tags which would fit the scene and give the output in an array"
+    print("QTquery_template", query_template)
+    output = bard.get_answer(query_template)
+    if output:
+        print("getting bard output")
+        tags = generate_tags(output=output)
+        # print(tags)
 
-#         if tags:
-#             # print("tags:", tags)
-#             return jsonify(get_youtube_results(tags=tags))
-#     elif output == None:
-#         return jsonify({'output': "null"})
+        if tags:
+            # print("tags:", tags)
+            return jsonify(get_youtube_results(tags=tags))
+    elif output == None:
+        return jsonify({'output': "null"})
 
-#     return jsonify({'output': "null"})
+    return jsonify({'output': "null"})
 
 
 @app.route('/test', methods=["GET"])
