@@ -5,18 +5,19 @@ import os
 import re
 import json
 from dotenv import load_dotenv
+import time
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from bardapi import Bard
 
-load_dotenv(".env")
+# load_dotenv(".env")
 
-yt_token = os.getenv("YOUTUBE_KEY")
-token = os.getenv("BARD_TOKEN")
-youtube = build('youtube', 'v3', developerKey=yt_token)
-bard = Bard(token=token)
+# yt_token = os.getenv("YOUTUBE_KEY")
+# token = os.getenv("BARD_TOKEN")
+# youtube = build('youtube', 'v3', developerKey=yt_token)
+# bard = Bard(token=token)
 
 
 scene = ""
@@ -105,6 +106,7 @@ def generate():
 
 @app.route('/test', methods=["GET"])
 def test():
+    time.sleep(3)
     return data
 
 
